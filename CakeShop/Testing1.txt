@@ -1,0 +1,56 @@
+I ended up using an third party application called Postman to aid in testing the Web APi.
+On Postman I was able to write some short scripts that tested the functionality of the Web API. 
+In additoin, I was able to write a python script that tested the Web API functionalities. 
+The code I wrote is below in this file:
+
+
+
+
+Postman Scripts:
+
+// Test The Status Code 
+pm.test("Status code is 200", function () {
+  pm.response.to.have.status(200);
+});
+
+// Test a POST Request
+pm.test("Successful POST request", function () {
+    pm.expect(pm.response.code).to.be.oneOf([200, 201,202]);
+});
+
+
+
+
+
+
+
+Python Script:
+
+import http.client
+
+conn = http.client.HTTPConnection("localhost")
+
+payload = "{\n\t\"OrderPlacedTime\": \"2019-10-19 23:05:20.3637659\",\n\t\"firstName\": \"Tory\",\n\t\"lastName\": \"Adderley\",\n\t\"AddressLine1\":
+			\"Rive Lane\",\n\t\"AddressLine2\": \"Apt 3\",\n\t\"City\": \"Fayetteville\",\n\t\"State\": \"fffs\",\n\t\"Country\": \"sfghfg\",\n\t\"Zipcode\": \"27270\",
+			\n\t\"PhoneNumber\": \"3342345321\",\n\t\"Email\": \"tory@444.com\",\n\t\"Personal_Note\":\"Testing\",\n\t\"UserId\": \"be353b5a-b4a5-434f-aac2-fbd3a6fc68be\"\n}"
+
+headers = {
+    'Content-Type': "application/json",
+    'User-Agent': "PostmanRuntime/7.18.0",
+    'Accept': "*/*",
+    'Cache-Control': "no-cache",
+    'Postman-Token': "6122624d-66f7-4a82-98d0-63b43bfd2acf,5cf16409-2f0f-4f9c-ae5e-193aa84e1413",
+    'Host': "localhost:11911",
+    'Accept-Encoding': "gzip, deflate",
+    'Content-Length': "356",
+    'Cookie': "CartId-cookie=95ee3362-4f08-46d6-bae6-a55d2c8dfa6b",
+    'Connection': "keep-alive",
+    'cache-control': "no-cache"
+    }
+
+conn.request("POST", "api,2,5", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
